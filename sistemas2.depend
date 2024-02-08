@@ -1,0 +1,100 @@
+# depslib dependency file v1.0
+1706648418 source:c:\codeblocks\sistemas2\datos.cpp
+	"datos.hpp"
+	<chrono>
+	<iostream>
+	<sstream>
+	<string>
+	<thread>
+	<iomanip>
+
+1706645262 c:\codeblocks\sistemas2\datos.hpp
+	<sstream>
+	"string"
+
+1706648475 source:c:\codeblocks\sistemas2\main.cpp
+	<iomanip>
+	<iostream>
+	<list>
+	<chrono>
+	<string>
+	<thread>
+	<vector>
+	"datos.hpp"
+
+1706728603 source:c:\users\ivan0\desktop\sistemas2\main.cpp
+	<iomanip>
+	<iostream>
+	<list>
+	<chrono>
+	<string>
+	<thread>
+	<vector>
+	<algorithm>
+	"datos.hpp"
+
+1706723082 c:\users\ivan0\desktop\sistemas2\datos.hpp
+	<sstream>
+	"string"
+
+1706727958 source:c:\users\ivan0\desktop\sistemas2\datos.cpp
+	"datos.hpp"
+	<chrono>
+	<iostream>
+	<sstream>
+	<string>
+	<thread>
+	<iomanip>
+
+1707317474 source:c:\users\ivan0\desktop\actividad1_sistemasoperativos\datos.cpp
+	"datos.hpp"
+	<mutex>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<sstream>
+	<string>
+	<thread>
+
+1706812368 c:\users\ivan0\desktop\actividad1_sistemasoperativos\datos.hpp
+	<sstream>
+	"string"
+
+1707324678 source:c:\users\ivan0\desktop\actividad1_sistemasoperativos\main.cpp
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<list>
+	<string>
+	<thread>
+	<vector>
+	<mutex>
+	"datos.hpp"
+
+1707413472 source:c:\users\chavc\desktop\universidad---sistemas-operativos-main\actividad1_sistemasoperativos\datos.cpp
+	"datos.hpp"
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1707357784 c:\users\chavc\desktop\universidad---sistemas-operativos-main\actividad1_sistemasoperativos\datos.hpp
+	<sstream>
+	"string"
+
+1707416164 source:c:\users\chavc\desktop\universidad---sistemas-operativos-main\actividad1_sistemasoperativos\main.cpp
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<list>
+	<mutex>
+	<string>
+	<thread>
+	<vector>
+	"datos.hpp"
+
