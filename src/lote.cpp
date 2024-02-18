@@ -1,4 +1,4 @@
-#include "Lote.hpp"
+#include "lote.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -27,7 +27,7 @@ void Lote::eliminarElemento(const Datos& elemento) {
 }
 
 // Método para obtener el tamaño de la lista
-int Lote::obtenerTamaño() const { return listaLote.size(); }
+int Lote::obtenerTamanio() const { return listaLote.size(); }
 
 // Método para verificar si la lista está vacía
 bool Lote::estaVacia() const { return listaLote.empty(); }
@@ -41,9 +41,9 @@ int Lote::getLoteID() const { return loteID; }
 // Método para mostrar un Lote
 void Lote::mostrarLote(const Lote& lote) const {
   for (const Datos& proceso : lote.listaLote) {
-    cout << "Lote Actual: " << loteID << "\n";
-    cout << "ID: " << proceso.GetID() << "\n";
+    cout << "\nID: " << proceso.GetID() << "\n";
     cout << "TME: " << proceso.GetTiempo() << endl;
+    cout << "TT: " << proceso.GetTiempoTranscurrido() << endl; 
   }
 }
 

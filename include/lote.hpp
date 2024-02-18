@@ -1,5 +1,5 @@
-#ifndef __LOTE_H__
-#define __LOTE_H__
+#ifndef __LOTE_HPP__
+#define __LOTE_HPP__
 
 #include "datos.hpp"
 #include "vector"
@@ -20,7 +20,7 @@ class Lote {
   void eliminarElemento(const Datos& elemento);
 
   // Método para obtener el tamaño de la lista
-  int obtenerTamaño() const;
+ int obtenerTamanio() const;
 
   // Método para verificar si la lista está vacía
   bool estaVacia() const;
@@ -40,4 +40,4 @@ class Lote {
   Datos obtenerElemento(int posicion) const;
 };
 
-#endif  // __LOTE_H__
+#endif  // __LOTE_HPP__

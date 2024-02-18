@@ -1,18 +1,15 @@
 #include "datos.hpp"
-
+#include <conio.h>
 #include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <mutex>
 #include <sstream>
 #include <string>
-#include <thread> 
+#include <thread>
 
 using namespace std;
 std::mutex mtx;
-
-void Datos::SetNombre(string _nombre) { nombre = _nombre; }
-string Datos::GetNombre() const { return nombre; }
 
 void Datos::SetId(int _id) { ID = _id; }
 int Datos::GetID() const { return ID; }
@@ -22,6 +19,9 @@ int Datos::getLoteID() const { return loteID; }
 
 void Datos::SetTiempo(int _Tiempo) { T_Duracion = _Tiempo; }
 int Datos::GetTiempo() const { return T_Duracion; }
+
+void Datos::SetTiempoTranscurrido(int _TiempoT) { T_Transcurrido = _TiempoT; }
+int Datos::GetTiempoTranscurrido() const { return T_Transcurrido; }
 
 void Datos::setResultado(string _resultado) { resultado = _resultado; }
 
@@ -35,6 +35,9 @@ void Datos::setOperadores(string _operadorUno, string _operadorDos,
                           string _operador) {
   operadores = _operadorUno + _operador + _operadorDos;
 }
+std::string Datos::getOperadores() const {
+    return operadores;
+}
 
 // Sobrecarga del operador ==
 bool Datos::operator==(const Datos& otro) const {
@@ -46,10 +49,10 @@ int Datos::toStringProceso(int tiempoTotal) const {
   int tiempoRestante = GetTiempo();
   int tiempoSumado = 0;
   cout << "         Ejecucion        " << endl;
-  cout << "Nombre: " << nombre << endl;
   cout << "ID: " << ID << endl;
   cout << "Operadores: " << operadores << endl;
   while (tiempoRestante > 0) {
+
     // Imprimir informaci�n de toStringProceso
     cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
     cout << "Tiempo de proceso: " << tiempoSumado << " segundos" << endl;
