@@ -1,43 +1,48 @@
+#ifndef __DATOS_H__
+#define __DATOS_H__
+
 using namespace std;
 #include <sstream>
+
 #include "string"
 
-class Datos{
-private:
-    string nombre;
-    int ID;
-    int T_Duracion;
-    string Operacion;
-    string operadores;
-    string operador;
-    int lote;
+class Datos {
+ private:
+  string nombre;
+  int ID;
+  int loteID;
+  int T_Duracion;
+  string resultado;
+  string operadores;
+  string operador;
 
-public:
-    string GetNombre() const;
-    void SetNombre(string);
+ public:
+  string GetNombre() const;
+  void SetNombre(string);
 
-    void SetTiempo(int);
-    int GetTiempo() const;
+  void SetTiempo(int);
+  int GetTiempo() const;
 
-    int GetID()const;
-    void SetId(int);
+  int GetID() const;
+  void SetId(int);
 
-    void setOperadores(string, string, string);
-    string getOperadores() const;
+  int getLoteID() const;
+  void setLoteID(int);
 
-    void setOperador(string);
-    string getOperador() const;
+  void setOperadores(string, string, string);
+  string getOperadores() const;
 
-    string getOperacion() const;
-    void setOperacion(string);
+  void setOperador(string);
+  string getOperador() const;
 
-    void setLote(int);
-    int getLote() const;
-    
-    int getContador() const;
-    void toStringMostarlote() const;
+  string getResultado() const;
+  void setResultado(string);
 
-    void toStringProceso() const;
-    void toStringTerceraColumna() const;
+  bool operator==(const Datos& otro) const;
 
-    };
+  int toStringProceso(int) const;
+
+  void toStringTerminados(int lote) const;
+};
+
+#endif  // __DATOS_H__

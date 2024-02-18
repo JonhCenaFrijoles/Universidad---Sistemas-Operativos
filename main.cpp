@@ -7,271 +7,278 @@
 #include <string>
 #include <thread>
 #include <vector>
-
+#include <conio.h>
 #include "datos.hpp"
+#include "lote.hpp"
+
 using namespace std;
 
 // Definición de la función para verificar ID repetido
-bool verificarIdRepetido(const vector<Datos>& listaLote, int id) {
-  for (const Datos& lote : listaLote) {
-    if (lote.GetID() == id) {
+bool verificarIdRepetido(const vector<Datos>& listaProcesos, int id) {
+  for (const Datos& proceso : listaProcesos) {
+    if (proceso.GetID() == id) {
       cout << "Error: El ID " << id
-           << " ya ha sido registrado. Ingresa un ID �nico." << endl;
+           << " ya ha sido registrado. Ingresa un ID único." << endl;
       return true;
     }
   }
   return false;  // ID único, no se ha encontrado repetido
 }
 
-
-/*void mostrarLotes(const vector<Datos>& listaLote, vector<Datos>::const_iterator it, const Datos& objAux) {
-  while (it != listaLote.end()) {
-    const Datos& loteActual = *it;
-    loteActual.toStringMostarlote();
-    ++it;
+// Definición de la función para verificar la división entre 0.
+void verificarDivision(int numeroDos) {
+  while (numeroDos <= 0) {
+    cout << "Division invalida, no puedes dividir entre 0.\nRe-ingresa el "
+            "valor: "
+         << endl;
+    cin >> numeroDos;
   }
-}*/
-/*void mostrarLotes(const vector<Datos>& listaLote, int inicio, int fin) {
-    for (int i = inicio; i < fin; ++i) {
-        const Datos& loteActual = listaLote[i];
-        loteActual.toStringMostarlote();
-    }
-}*/
-
-/*void mostrarLotes(const vector<Datos>& listaLote, vector<Datos>::const_iterator inicio, int fin) {
-    while (inicio != listaLote.end() && fin > 0) {
-        const Datos& loteActual = *inicio;
-        loteActual.toStringMostarlote();
-        inicio++;
-        fin--;
-    }
-}*/
-void mostrarLotes(const vector<Datos>& listaLote, vector<Datos>::const_iterator inicio, int fin) {
-    int contadorLotes = 0; // Contador de lotes mostrados
-    while (inicio != listaLote.end() && fin > 0 && contadorLotes < fin) {
-        const Datos& loteActual = *inicio;
-        loteActual.toStringMostarlote();
-        inicio++;
-        contadorLotes++;
-    }
 }
 
-
 int main() {
-  int numeroLote = 1;  // variable para imprimir el numero de lote en proceso
-  Datos lote;
-  vector<Datos> listaLote;  // lista de lote
+  int numeroLote = 1;  // variable para imprimir el numero de proceso en proceso
+  Datos proceso;       // Objeto proceso
+  Lote lote;           // Objeto proceso
+  vector<Datos> listaProcesos;
+  vector<Lote> listaLote;  // lista de lotes
   vector<Datos> listaLoteTerminados;
 
   cout << "Ingresa el numero de procesos" << endl;
   int numeroProcesoTotal;  // Numero de procesos total
   cin >> numeroProcesoTotal;
 
-  int i = 0;
-  string nombre;
-  int id;  // id del lote
-  string operacion;
-  int tiempoEstimado;
-  int contadorProceso;
+  int i = 0;            // Contador de procesos
+  string nombre;        // Nombre del proceso
+  int id;               // ID del proceso
+  string resultado;     // Resultado del proceso
+  int tiempoEstimado;   // Tiempo estimado del proceso
+  int contadorProceso;  // Contador del proceso+
 
   // Añadir proceso
   while (i < numeroProcesoTotal) {
-    if (contadorProceso == 4) {
-      numeroLote++;
-      contadorProceso = 0;
-      lote.setLote(numeroLote);
-    } else {
-      lote.setLote(numeroLote);
+    while (contadorProceso < 4 && i < numeroProcesoTotal) {
+      system("cls");
+
+      cout << "Proceso No.  " << i + 1 << endl << endl;
+
+      lote.setLoteID(numeroLote);  // Asigna el número del lote (ID)
+
+      int opcionOperacion, numeroUno, numeroDos;  // Declaración de variables
+
+      cin.ignore();
+      cout << "Inserta tu nombre: " << endl;
+      getline(cin, nombre);
+      proceso.SetNombre(nombre);
+      do {
+        cout << "Ingresa tu ID: " << endl;
+        cin >> id;
+      } while (verificarIdRepetido(listaProcesos,
+                                   id));  // verifica el id con la funcion
+
+      proceso.SetId(id);  // ingresa el id al objeto
+
+      cout << "Ingresa el tiempo estimado: " << endl;
+      cin >> tiempoEstimado;
+      proceso.SetTiempo(
+          tiempoEstimado);  // ingresa el tiempo estimado al objeto
+
+      cout << " ------ Selecciona la operación ------ " << endl;
+      cout << "1.- Multiplicacion " << endl;
+      cout << "2.- Division " << endl;
+      cout << "3.- Suma " << endl;
+      cout << "4.- restar " << endl;
+      cout << "5.- residuo " << endl;
+      cin >> opcionOperacion;
+
+      cout << "Ingresa el primer operando: " << endl;
+      cin >> numeroUno;
+      cout << "Ingresa el segundo operando: " << endl;
+      cin >> numeroDos;
+
+      switch (opcionOperacion) {  // Asignar operación
+        case 1: {
+          proceso.setResultado(to_string(numeroUno) + "x" +
+                               to_string(numeroDos) + "=" +
+                               to_string(numeroUno * numeroDos));
+
+          proceso.setOperadores(to_string(numeroUno), to_string(numeroDos),
+                                " x ");
+          break;
+        }
+        case 2: {
+          // Verificación de la division entre 0.
+          verificarDivision(numeroDos);
+          proceso.setResultado(to_string(numeroUno) + "/" +
+                               to_string(numeroDos) + "=" +
+                               to_string(numeroUno / numeroDos));
+          proceso.setOperadores(to_string(numeroUno), to_string(numeroDos),
+                                " / ");
+          break;
+        }
+        case 3: {
+          proceso.setResultado(to_string(numeroUno) + "+" +
+                               to_string(numeroDos) + "=" +
+                               to_string(numeroUno + numeroDos));
+          proceso.setOperadores(to_string(numeroUno), to_string(numeroDos),
+                                " + ");
+          break;
+        }
+        case 4: {
+          proceso.setResultado(to_string(numeroUno) + "-" +
+                               to_string(numeroDos) + "=" +
+                               to_string(numeroUno - numeroDos));
+          proceso.setOperadores(to_string(numeroUno), to_string(numeroDos),
+                                " - ");
+          break;
+        }
+        case 5: {
+          // Verificación de la división entre 0.
+          verificarDivision(numeroDos);
+          proceso.setResultado(to_string(numeroUno) + "%" +
+                               to_string(numeroDos) + "=" +
+                               to_string(numeroUno % numeroDos));
+          proceso.setOperadores(to_string(numeroUno), to_string(numeroDos),
+                                " % ");
+          break;
+        } break;
+      }
+      proceso.setLoteID(numeroLote);
+      listaProcesos.push_back(proceso);  // Lista de los procesos
+      lote.agregarElemento(proceso);     // Agrega el proceso a su lotes
+      i++;
+      contadorProceso++;
     }
 
-    int opcionOperacion;
-    int numeroUno;
-    int numeroDos;
-
-    cin.ignore();
-    cout << "Inserta tu nombre" << endl;
-    getline(cin, nombre);
-    lote.SetNombre(nombre);
-    do {
-      cout << "Ingresa tu ID" << endl;
-      cin >> id;
-    } while (
-        verificarIdRepetido(listaLote, id));  // verifica el id con la funcion
-
-    lote.SetId(id);  // ingresa el id al objeto
-
-    cout << "Ingresa el tiempo estimado" << endl;
-    cin >> tiempoEstimado;
-    lote.SetTiempo(tiempoEstimado);  // ingresa el tiempo estimado al objeto
-
-    cout << "selecciona la operacion" << endl;
-    cout << "(1)Multiplicacion" << endl;
-    cout << "(2)Division" << endl;
-    cout << "(3)Suma" << endl;
-    cout << "(4)restar" << endl;
-    cout << "(5) residuo" << endl;
-    cin >> opcionOperacion;
-
-    cout << "ingresa el primer numero" << endl;
-    cin >> numeroUno;
-    cout << "ingresa el segundo numero" << endl;
-    cin >> numeroDos;
-
-    switch (opcionOperacion) {  // Asignar operación
-      case 1: {
-        lote.setOperacion(to_string(numeroUno) + "x" + to_string(numeroDos) +
-                          "=" + to_string(numeroUno * numeroDos));
-
-        lote.setOperadores(to_string(numeroUno), to_string(numeroDos), " x ");
-        break;
-      }
-      case 2: {
-        lote.setOperacion(to_string(numeroUno) + "/" + to_string(numeroDos) +
-                          "=" + to_string(numeroUno / numeroDos));
-        lote.setOperadores(to_string(numeroUno), to_string(numeroDos), " / ");
-        break;
-      }
-      case 3: {
-        lote.setOperacion(to_string(numeroUno) + "+" + to_string(numeroDos) +
-                          "=" + to_string(numeroUno + numeroDos));
-        lote.setOperadores(to_string(numeroUno), to_string(numeroDos), " + ");
-        break;
-      }
-      case 4: {
-        lote.setOperacion(to_string(numeroUno) + "-" + to_string(numeroDos) +
-                          "=" + to_string(numeroUno - numeroDos));
-        lote.setOperadores(to_string(numeroUno), to_string(numeroDos), " - ");
-        break;
-      }
-      case 5: {
-        lote.setOperacion(to_string(numeroUno) + "%" + to_string(numeroDos) +
-                          "=" + to_string(numeroUno % numeroDos));
-        lote.setOperadores(to_string(numeroUno), to_string(numeroDos), " % ");
-        break;
-      } break;
-    }
-
-    listaLote.push_back(lote);
-    i++;
-    contadorProceso++;
+    numeroLote++;         // Aumenta el número del lote
+    contadorProceso = 0;  // Reincia el contador de procesos asignados al lote
+    listaLote.push_back(lote);  // Ingresa el lote
+    lote.mostrarLote(lote);     // Muestra el lote completo antes de limpiarlo
+    lote.vaciarLote();          // Vacia el lote para usar otro nuevo
   }
 
+  // Limpia la terminal para pasar a procesar.
   system("cls");
 
-  Datos terminado;
+  auto contador = listaLote.begin();  // Se inicializa el iterador apuntando al
+                                      // primer elemento de listaLote
+  bool bandera = true;
 
-  auto it = listaLote.begin();  // Se inicializa el iterador apuntando al primer
-                                // elemento de listaLote
-  bool cont = true;
-  int procesoDeLote = 4;
   int tiempo = 1;
-  int pos=0;
-  int loteActual=1;
-  int inicio = 0;
+  int tiempoTotal = 0;
 
-int procesosProcesados = 0;
-int primerLoteAMostrar = 0; // Índice del primer lote a mostrar en cada iteración
-
-while (it != listaLote.end()) {
-    cout << "Mostrando procesos del " << primerLoteAMostrar + 1 << " al " << min(primerLoteAMostrar + procesoDeLote, static_cast<int>(listaLote.size())) << endl;
-    mostrarLotes(listaLote, listaLote.begin() + primerLoteAMostrar, min(4, static_cast<int>(listaLote.size())));
-    cout << "----------------------------------" << endl;
-
+  while (contador != listaLote.end()) {
+    while (kbhit()) {
+            getch(); // Leer y descartar el carácter del búfer de entrada (para que no te salgan letras a lo pendejo
+    }
     // Procesar los lotes mostrados
-    for (int i = 0; i < procesoDeLote && it != listaLote.end(); ++i) {
-        const Datos& lote = *it;
+    int posicion = 0;
+    while (bandera) {
+      Lote& lote = *contador;  // Obtenemos el primer lote
+      Datos variableSexy;
+      // Obtenemos el primer proceso del lote
+      Datos proceso = lote.obtenerElemento(posicion);
 
-        // Imprimir y procesar el lote actual
-        lote.toStringProceso();
-        listaLoteTerminados.push_back(lote);
 
-        // Mostrar los procesos terminados en una posición fija en la consola
-        for (const Datos& terminado : listaLoteTerminados) {
-            terminado.toStringTerceraColumna();
+      lote.eliminarElemento(proceso);  // Eliminar el objeto del lote
+
+      lote.mostrarLote(lote);  // Mostramos el lote
+
+      cout << "----------------------------------" << endl;
+
+      // Imprimir y procesar el proceso actual
+         // Imprimir y procesar el proceso actual
+            int totalTime = proceso.GetTiempo();
+            int tiempoRestante = proceso.GetTiempo();
+            int tiempoSumado = 0;
+            cout << "         Ejecucion        " << endl;
+            cout << "Nombre: " << proceso.GetNombre() << endl;
+            cout << "ID: " << proceso.GetID() << endl;
+            cout << "Operadores: " << proceso.getOperadores() << endl;
+            while (tiempoRestante > 0) {
+                 if (kbhit()) {
+                    char tecla = getch(); // Obtener la tecla presionada
+                    cout << "Tecla presionada: " << tecla << endl;
+
+                    if (tecla == 'q') {
+                        break; // Salir del bucle si se presiona 'q'
+                        }
+                    if (tecla == 'e') {
+                        Datos objetoAux; // Crear un nuevo objeto auxiliar para guardar los datos
+
+                        // Eliminar el proceso actual del lote
+                        objetoAux=proceso;// se guardan los datos de este proceso en un nuevo proceso
+                        objetoAux.SetId(proceso.GetID());
+                        lote.eliminarElemento(proceso);
+                        objetoAux.SetTiempo(totalTime - tiempoRestante); // Actualizar su tiempo
+                        // Agregar el objeto auxiliar al lote
+                        lote.agregarElemento(objetoAux);
+                        // Mover al siguiente proceso
+                        system("cls");
+
+                        // Mostrar el lote actualizado
+                        lote.mostrarLote(lote);
+                        cout << "terminados" << endl;
+                        for (const Datos& proceso : listaLoteTerminados) {
+                            proceso.toStringTerminados(proceso.getLoteID());
+                        }
+                        system("pause");
+
+                        // Continuar con el siguiente proceso
+                        break;
+                    }
+
+                }
+
+                // Imprimir información del proceso
+                cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
+                cout << "Tiempo de proceso: " << tiempoSumado << " segundos" << endl;
+                cout << "Tiempo total: " << tiempoTotal << " segundos" << endl;
+                // Pausa de un segundo para simular el tiempo
+                this_thread::sleep_for(chrono::seconds(1));
+                cout << "\033[3A\033[K";  // Retrocede dos líneas y las limpia
+                tiempoRestante--;
+                tiempoSumado++;
+                tiempoTotal++;
+                if(tiempoSumado == totalTime){
+                    listaLoteTerminados.push_back(proceso);
+
+                }
+
+            }
+            cout << endl;
+      //tiempoTotal = proceso.toStringProceso(tiempoTotal);
+
+
+
+      cout << "         Terminados          " << endl;
+      int contSeparacion =1;
+
+      // Mostrar los procesos terminados en una posición fija en la consola
+      for (const Datos& proceso : listaLoteTerminados) {
+        proceso.toStringTerminados(proceso.getLoteID());
+        if(contSeparacion % 4==0){
+            cout<<"////////////////////////////////////////////"<<endl;
         }
+        contSeparacion++;
 
-        this_thread::sleep_for(chrono::seconds(tiempo)); // Esperar el tiempo entre procesos
+      }
 
-        it++; // Avanzar al siguiente elemento
+      // Esperar el tiempo entre procesos
+      this_thread::sleep_for(chrono::seconds(tiempo));
+
+      system("cls");  // Limpiamos la terminal
+
+      // Si el lote esta vacío, levantamos la bandera y salimos del bucle
+      // interior
+      if (lote.estaVacia()) {
+        bandera = false;
+      }
     }
 
-    primerLoteAMostrar += procesoDeLote; // Actualizar el índice del primer lote a mostrar en la próxima iteración
-    system("cls");
-}
+    bandera = true;  // Reiniciamos la bandera
+    contador++;      // Cambiamos de lote
+  }
 
-
-
-  /*while (inicio < listaLote.size()) {
-    cout << "Mostrando procesos del " << primerLoteAMostrar + 1 << " al " << min(primerLoteAMostrar + procesoDeLote, static_cast<int>(listaLote.size())) << endl;
-    mostrarLotes(listaLote, listaLote.begin() + primerLoteAMostrar, min(primerLoteAMostrar + procesoDeLote, static_cast<int>(listaLote.size())));
-    cout << "----------------------------------" << endl;
-
-    int procesosProcesados = 0; // Inicializar el contador de procesos procesados
-    while (it != listaLote.end()) {
-
-        const Datos& lote = *it;
-        // Si se han procesado menos de 4 procesos, continuar procesando
-        if (procesosProcesados < 4) {
-            // Imprimir y procesar el lote actual
-            lote.toStringProceso();
-            listaLoteTerminados.push_back(lote);
-            procesosProcesados++;
-        } else {
-            // Si ya se procesaron 4 procesos, detener la iteración actual
-            break;
-        }
-
-        // Mostrar los procesos terminados en una posición fija en la consola
-        for (const Datos& terminado : listaLoteTerminados) {
-            terminado.toStringTerceraColumna();
-        }
-
-        this_thread::sleep_for(chrono::seconds(tiempo)); // Esperar el tiempo entre procesos
-
-        it++; // Avanzar al siguiente elemento
-        //system("cls");
-    }
-      this_thread::sleep_for(chrono::seconds(tiempo)); // Tiempo entre procesos
-
-    system("cls");
-
-    inicio += procesoDeLote;
-  }*/
-/*int procesosProcesados = 0; // Inicializar el contador de procesos procesados
-while (it != listaLote.end()) {
-    cout << "Mostrando procesos del " << inicio + 1 << " al " << min(inicio + procesoDeLote, static_cast<int>(listaLote.size())) << endl;
-    // Mostrar los lotes para esta iteración
-    mostrarLotes(listaLote, listaLote.begin() + inicio, min(inicio + procesoDeLote, static_cast<int>(listaLote.size())));
-    cout << "----------------------------------" << endl;
-    // Procesar los lotes para esta iteración
-    for (int i = 0; i < procesoDeLote && it != listaLote.end(); ++i) {
-        // Se obtiene una referencia al elemento actual
-        const Datos& lote = *it;
-
-        // Si se han procesado menos de 4 procesos, continuar procesando
-        if (procesosProcesados < 4) {
-            // Imprimir y procesar el lote actual
-            lote.toStringProceso();
-            listaLoteTerminados.push_back(lote);
-            procesosProcesados++;
-        } else {
-            // Si ya se procesaron 4 procesos, detener la iteración actual
-            break;
-        }
-
-        it++; // Avanzar al siguiente elemento
-    }
-
-    // Mostrar los procesos terminados en una posición fija en la consola
-    for (const Datos& terminado : listaLoteTerminados) {
-        terminado.toStringTerceraColumna();
-    }
-
-    this_thread::sleep_for(chrono::seconds(tiempo)); // Esperar el tiempo entre procesos
-
-    system("cls");
-    inicio += procesoDeLote; // Actualizar el inicio para la próxima iteración
-    procesosProcesados = 0; // Reiniciar el contador de procesos procesados
-}*/
+  system("pause");
   return 0;
 }
