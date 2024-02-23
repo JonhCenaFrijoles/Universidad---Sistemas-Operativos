@@ -41,9 +41,9 @@ int Lote::getLoteID() const { return loteID; }
 // Método para mostrar un Lote
 void Lote::mostrarLote(const Lote& lote) const {
   for (const Datos& proceso : lote.listaLote) {
-    cout << "Lote Actual: " << loteID << "\n";
-    cout << "ID: " << proceso.GetID() << "\n";
+    cout << "\nID: " << proceso.GetID() << "\n";
     cout << "TME: " << proceso.GetTiempo() << endl;
+    cout << "TT: " << proceso.GetTiempoTranscurrido() << endl;
   }
 }
 

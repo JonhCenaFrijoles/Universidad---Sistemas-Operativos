@@ -11,9 +11,6 @@
 using namespace std;
 std::mutex mtx;
 
-void Datos::SetNombre(string _nombre) { nombre = _nombre; }
-string Datos::GetNombre() const { return nombre; }
-
 void Datos::SetId(int _id) { ID = _id; }
 int Datos::GetID() const { return ID; }
 
@@ -22,6 +19,9 @@ int Datos::getLoteID() const { return loteID; }
 
 void Datos::SetTiempo(int _Tiempo) { T_Duracion = _Tiempo; }
 int Datos::GetTiempo() const { return T_Duracion; }
+
+void Datos::SetTiempoTranscurrido(int _TiempoT) { T_Transcurrido = _TiempoT; }
+int Datos::GetTiempoTranscurrido() const { return T_Transcurrido; }
 
 void Datos::setResultado(string _resultado) { resultado = _resultado; }
 
@@ -49,7 +49,6 @@ int Datos::toStringProceso(int tiempoTotal) const {
   int tiempoRestante = GetTiempo();
   int tiempoSumado = 0;
   cout << "         Ejecucion        " << endl;
-  cout << "Nombre: " << nombre << endl;
   cout << "ID: " << ID << endl;
   cout << "Operadores: " << operadores << endl;
   while (tiempoRestante > 0) {

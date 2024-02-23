@@ -8,20 +8,20 @@ using namespace std;
 
 class Datos {
  private:
-  string nombre;
   int ID;
   int loteID;
   int T_Duracion;
+  int T_Transcurrido = 0;
   string resultado;
   string operadores;
   string operador;
 
  public:
-  string GetNombre() const;
-  void SetNombre(string);
-
   void SetTiempo(int);
   int GetTiempo() const;
+
+  void SetTiempoTranscurrido(int);
+  int GetTiempoTranscurrido() const;
 
   int GetID() const;
   void SetId(int);
