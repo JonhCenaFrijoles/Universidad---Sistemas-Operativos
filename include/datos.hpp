@@ -10,6 +10,7 @@ class Datos {
  private:
   int ID;
   int loteID;
+  int T_Estimado;
   int T_Duracion;
   int T_Transcurrido = 0;
   string resultado;
@@ -17,6 +18,9 @@ class Datos {
   string operador;
 
  public:
+  void SetTiempoEstimado(int);
+  int GetTiempoEstimado() const;
+
   void SetTiempo(int);
   int GetTiempo() const;
 

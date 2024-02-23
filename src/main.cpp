@@ -10,6 +10,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <limits>
 
 #include "datos.hpp"
 #include "lote.hpp"
@@ -30,7 +31,7 @@ bool verificarIdRepetido(const vector<Datos>& listaProcesos, int id) {
 
 // Definición de la función para verificar la división entre 0.
 void verificarDivision(int numeroDos) {
-  while (numeroDos <= 0) {
+  while (numeroDos == 0) {
     cout << "Division invalida, no puedes dividir entre 0.\nRe-ingresa el "
             "valor: "
          << endl;
@@ -40,15 +41,28 @@ void verificarDivision(int numeroDos) {
 
 // Definición de la función para aleatorizar los números con parámetros.
 int generarEnterosAleatorios(int minimo, int maximo) {
-  random_device rd;
-  mt19937 gen(rd());
-
-  uniform_int_distribution<> distribucion(minimo, maximo);
-  return distribucion(gen);
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<> distribucion(minimo, maximo);
+    return distribucion(gen);
 }
 
 // Definición de la función para aleatorizar los números sin parámetros
 int generarEnterosAleatorios() { return generarEnterosAleatorios(0, 100); }
+
+int validarEntero() {
+  int numero;
+  while (true) {
+    if (cin >> numero) {
+      break;
+    } else {
+      cout << "Entrada invalida. Por favor, ingresa un número entero." << endl;
+      cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Ignorar el resto de la entrada
+    }
+  }
+  return numero;
+}
 
 int main() {
   int numeroLote = 1;  // variable para imprimir el numero de proceso en proceso
@@ -81,10 +95,13 @@ int main() {
       proceso.SetId(i + 1);  // ingresa el id al objeto
 
       tiempoEstimado = generarEnterosAleatorios(5, 18);
-      proceso.SetTiempo(
-          tiempoEstimado);  // ingresa el tiempo estimado al objeto
 
-      opcionOperacion = generarEnterosAleatorios(1, 5); 
+      // ingresa el tiempo estimado al objeto
+      proceso.SetTiempo(tiempoEstimado);  
+      proceso.SetTiempoEstimado(tiempoEstimado);
+
+      generarEnterosAleatorios(1, 5);
+      opcionOperacion = generarEnterosAleatorios(1, 5);
 
       switch (opcionOperacion) {
         case 1:
@@ -106,9 +123,9 @@ int main() {
 
       cout << "La operacion sera " << proceso.getOperador() << endl;
       cout << "Ingresa el primer operando: " << endl;
-      cin >> numeroUno;
+      numeroUno = validarEntero();
       cout << "Ingresa el segundo operando: " << endl;
-      cin >> numeroDos;
+      numeroDos = validarEntero();
 
       switch (opcionOperacion) {  // Asignar operación
         case 1: {
@@ -192,23 +209,25 @@ int main() {
 
     while (bandera) {
       Lote& lote = *contador;  // Obtenemos el primer lote
-      Datos variableSexy;
       // Obtenemos el primer proceso del lote
       Datos proceso = lote.obtenerElemento(posicion);
 
       lote.eliminarElemento(proceso);  // Eliminar el objeto del lote
 
       // Mostramos el lote
-      cout << "Lotes Faltantes: " << listaLote.size() - 1 
+      cout << "Lotes Faltantes: " << listaLote.size() - 1
       << "\n\nLote Actual:  " << lote.getLoteID() << endl;
       lote.mostrarLote(lote);
 
       cout << "\n----------------------------------" << endl;
 
       // Imprimir y procesar el proceso actual
+      // Obtenemos el tiempo total estimado
       int totalTime = proceso.GetTiempo();
+      // Obtenemos el tiempo restante
       int tiempoRestante = proceso.GetTiempo();
       int tiempoSumado = 0;
+      int tiempoTranscurrido = proceso.GetTiempoTranscurrido();
       cout << "         Ejecucion        " << endl;
       cout << "ID: " << proceso.GetID() << endl;
       cout << "Operadores: " << proceso.getOperadores() << endl;
@@ -237,8 +256,8 @@ int main() {
                                   // nuevo proceso
             objetoAux.SetId(proceso.GetID());
             lote.eliminarElemento(proceso);
-            objetoAux.SetTiempo(totalTime -
-                                tiempoRestante);  // Actualizar su tiempo
+            objetoAux.SetTiempo(totalTime-tiempoSumado);
+            objetoAux.SetTiempoTranscurrido(tiempoTranscurrido);  // Actualizar su tiempo
             // Agregar el objeto auxiliar al lote
             lote.agregarElemento(objetoAux);
             // Mover al siguiente proceso
@@ -253,7 +272,7 @@ int main() {
 
             break;
           }
-          // Tecla para interrupir el proceso actual y generar un error 
+          // Tecla para interrupir el proceso actual y generar un error
           if (tecla == 'w') {
             // El resultado resulta ERROR
             proceso.setResultado("ERROR");
@@ -270,8 +289,8 @@ int main() {
         if (!pausado) {
           // Imprimir información del proceso
           cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
-          cout << "Tiempo de proceso: " << tiempoSumado << " segundos" << endl;
-          proceso.SetTiempoTranscurrido(tiempoSumado);
+          cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos" << endl;
+          proceso.SetTiempoTranscurrido(tiempoTranscurrido);
           cout << "Tiempo total: " << tiempoTotal << " segundos" << endl;
           // Pausa de un segundo para simular el tiempo
           this_thread::sleep_for(chrono::seconds(1));
@@ -279,6 +298,7 @@ int main() {
           tiempoRestante--;
           tiempoSumado++;
           tiempoTotal++;
+          tiempoTranscurrido++;
           if (tiempoSumado == totalTime) {
             listaLoteTerminados.push_back(proceso);
           }
@@ -313,6 +333,6 @@ int main() {
     bandera = true;  // Reiniciamos la bandera
     contador++;      // Cambiamos de lote
   }
-  this_thread::sleep_for(chrono::seconds(10));
+  system("pause");
   return 0;
 }

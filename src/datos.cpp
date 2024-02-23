@@ -17,6 +17,9 @@ int Datos::GetID() const { return ID; }
 void Datos::setLoteID(int _loteID) { loteID = _loteID; }
 int Datos::getLoteID() const { return loteID; }
 
+void Datos::SetTiempoEstimado(int _TiempoEstimado) { T_Estimado = _TiempoEstimado; }
+int Datos::GetTiempoEstimado() const { return T_Estimado; }
+
 void Datos::SetTiempo(int _Tiempo) { T_Duracion = _Tiempo; }
 int Datos::GetTiempo() const { return T_Duracion; }
 
