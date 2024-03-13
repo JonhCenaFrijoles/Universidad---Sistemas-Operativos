@@ -10,11 +10,32 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <limits>
 
 #include "datos.hpp"
 #include "lote.hpp"
 
 using namespace std;
+
+//funcion para recorrer el proceso de los bloqueados
+bool recorrerListaBloq(vector<Datos>& listaBloq, Lote& lote) {
+    for (auto it = listaBloq.begin(); it != listaBloq.end(); ++it) {
+        Datos& proceso = *it;//esto para la pocision y despues poder elminar
+        int tiempoActualizado = proceso.getTiempoBloq();//se obtiene el proceso de bloqueados que se inicializa en 0
+        tiempoActualizado++;//se suma en cada iteracion
+        proceso.setTiempoBloq(tiempoActualizado);//se actualiza en cada iteracion el proceso de bloqueado
+        cout << proceso.GetID() <<" : "<<proceso.getTiempoBloq()<<"     ";
+        if (proceso.getTiempoBloq() == 8) {
+            lote.agregarElemento(proceso);//se agrega de nuevo
+            lote.eliminarElementoBloq(proceso);//aqui tambien se elimina de la lista de los objetos
+            it = listaBloq.erase(it); // Eliminar el proceso del vector y actualizar el iterador
+            //if (it == listaBloq.end()) break; // Verificar si se alcanzó el final del vector
+            break;
+        }
+    }
+
+}
+
 
 // Definición de la función para verificar ID repetido
 bool verificarIdRepetido(const vector<Datos>& listaProcesos, int id) {
@@ -30,7 +51,7 @@ bool verificarIdRepetido(const vector<Datos>& listaProcesos, int id) {
 
 // Definición de la función para verificar la división entre 0.
 void verificarDivision(int numeroDos) {
-  while (numeroDos <= 0) {
+  while (numeroDos == 0) {
     cout << "Division invalida, no puedes dividir entre 0.\nRe-ingresa el "
             "valor: "
          << endl;
@@ -40,14 +61,28 @@ void verificarDivision(int numeroDos) {
 
 // Definición de la función para aleatorizar los números con parámetros.
 int generarEnterosAleatorios(int minimo, int maximo) {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distribucion(minimo, maximo);
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<> distribucion(minimo, maximo);
     return distribucion(gen);
 }
 
 // Definición de la función para aleatorizar los números sin parámetros
 int generarEnterosAleatorios() { return generarEnterosAleatorios(0, 100); }
+
+int validarEntero() {
+  int numero;
+  while (true) {
+    if (cin >> numero) {
+      break;
+    } else {
+      cout << "Entrada invalida. Por favor, ingresa un número entero." << endl;
+      cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Ignorar el resto de la entrada
+    }
+  }
+  return numero;
+}
 
 int main() {
   int numeroLote = 1;  // variable para imprimir el numero de proceso en proceso
@@ -56,10 +91,10 @@ int main() {
   vector<Datos> listaProcesos;
   vector<Lote> listaLote;  // lista de lotes
   vector<Datos> listaLoteTerminados;
+  vector<Datos> listaBloq;
 
   cout << "Ingresa el numero de procesos" << endl;
-  int numeroProcesoTotal;  // Numero de procesos total
-  cin >> numeroProcesoTotal;
+  int numeroProcesoTotal = validarEntero();  // Numero de procesos total
 
   int i = 0;            // Contador de procesos
   string resultado;     // Resultado del proceso
@@ -79,9 +114,12 @@ int main() {
 
       proceso.SetId(i + 1);  // ingresa el id al objeto
 
-      tiempoEstimado = generarEnterosAleatorios(1, 5);
-      proceso.SetTiempo(
-          tiempoEstimado);  // ingresa el tiempo estimado al objeto
+      tiempoEstimado = generarEnterosAleatorios(5, 18);
+
+      // ingresa el tiempo estimado al objeto
+      proceso.SetTiempo(tiempoEstimado);
+      proceso.SetTiempoEstimado(tiempoEstimado);
+
       generarEnterosAleatorios(1, 5);
       opcionOperacion = generarEnterosAleatorios(1, 5);
 
@@ -103,12 +141,14 @@ int main() {
           break;
       }
 
-      cout << "La operacion sera " << proceso.getOperador() << endl;
-      cout << "Ingresa el primer operando: " << endl;
-      cin >> numeroUno;
-      cout << "Ingresa el segundo operando: " << endl;
-      cin >> numeroDos;
-
+      //cout << "La operacion sera " << proceso.getOperador() << endl;
+      numeroUno = generarEnterosAleatorios(1,100);
+      //cout << "Ingresa el primer operando: " << endl;
+      //numeroUno = validarEntero();
+      //cout << "Ingresa el segundo operando: " << endl;
+      numeroDos = generarEnterosAleatorios(1,100);
+      //numeroDos = validarEntero();
+    //holaaaaaaaaaaaaaaaa
       switch (opcionOperacion) {  // Asignar operación
         case 1: {
           proceso.setResultado(to_string(numeroUno) + "x" +
@@ -191,9 +231,9 @@ int main() {
 
     while (bandera) {
       Lote& lote = *contador;  // Obtenemos el primer lote
-      Datos variableSexy;
       // Obtenemos el primer proceso del lote
       Datos proceso = lote.obtenerElemento(posicion);
+      //Datos procesobloq = lote.obtenerElementoBloq(posicion);
 
       lote.eliminarElemento(proceso);  // Eliminar el objeto del lote
 
@@ -201,15 +241,24 @@ int main() {
       cout << "Lotes Faltantes: " << listaLote.size() - 1
       << "\n\nLote Actual:  " << lote.getLoteID() << endl;
       lote.mostrarLote(lote);
+      cout<<"-------------------------------------"<<endl;
+      cout<<"bloqueados"<<endl;
+      //lote.mostrarBloqueados(lote);
+      lote.mostrarBloqueados(lote);
+
 
       cout << "\n----------------------------------" << endl;
 
       // Imprimir y procesar el proceso actual
+      // Obtenemos el tiempo total estimado
       int totalTime = proceso.GetTiempo();
+      // Obtenemos el tiempo restante
+      int tiempobloq= 8;
       int tiempoRestante = proceso.GetTiempo();
       int tiempoSumado = 0;
-      cout << "         Ejecucion        " << endl;
-      cout << "ID: " << proceso.GetID() << endl;
+      int tiempoTranscurrido = proceso.GetTiempoTranscurrido();
+      cout << "         Ejecucion        " <<endl;
+      cout << "ID: " << proceso.GetID() <<endl;
       cout << "Operadores: " << proceso.getOperadores() << endl;
 
       bool pausado = false;
@@ -220,31 +269,35 @@ int main() {
           char tecla = getch();  // Obtener la tecla presionada
 
           // Tecla para pausar el proceso actual
-          if (tecla == 'q') {
+          if (tecla == 'p') {
             pausado = true;
             cout << "Proceso pausado. Presiona 'c' para reanudar." << endl;
           } else if (tecla == 'c') { // Tecla para reanudar el proceso actual
             pausado = false;
+            cout << "\033[2A\033[K";
             cout << "Proceso reanudado." << endl;
           }
           if (tecla == 'e') {
-            Datos objetoAux;  // Crear un nuevo objeto auxiliar para guardar los
-                              // datos
-
-            // Eliminar el proceso actual del lote
-            objetoAux = proceso;  // se guardan los datos de este proceso en un
-                                  // nuevo proceso
+            Datos objetoAux;  // Crear un nuevo objeto auxiliar para guardar los datos
+            objetoAux = proceso;  // se guardan los datos de este proceso en un nuevo proceso
             objetoAux.SetId(proceso.GetID());
             lote.eliminarElemento(proceso);
-            objetoAux.SetTiempo(totalTime-tiempoSumado);
-            objetoAux.SetTiempoTranscurrido(totalTime-tiempoSumado);  // Actualizar su tiempo
+            objetoAux.SetTiempo(totalTime - tiempoSumado);
+            objetoAux.SetTiempoTranscurrido(tiempoTranscurrido);  // Actualizar su tiempo
+            // Agregar el objeto auxiliar al loteo
             // Agregar el objeto auxiliar al lote
-            lote.agregarElemento(objetoAux);
+
+
+            listaBloq.push_back(objetoAux);
+            lote.agregarElementoBloq(objetoAux);
             // Mover al siguiente proceso
             system("cls");
 
             // Mostrar el lote actualizado
-            lote.mostrarLote(lote);
+            cout<<"memoria actual"<<endl;
+            //lote.mostrarLote(lote);
+            cout<<"Bloqueados"<<endl;
+            lote.mostrarBloqueados(lote);
 
             // Hacer un segundo de retraso antes de continuar con el siguiente
             // proceso
@@ -267,10 +320,12 @@ int main() {
 
         // Si no esta pausado, sigue el proceso como si nada
         if (!pausado) {
+          //recorrer el proceso de los bloqueados
+          recorrerListaBloq(listaBloq,lote);
           // Imprimir información del proceso
-          cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
-          cout << "Tiempo de proceso: " << tiempoSumado << " segundos" << endl;
-          proceso.SetTiempoTranscurrido(tiempoSumado);
+          cout << "Tiempo restante: " << tiempoRestante << " segundos"<<endl;
+          cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos" << endl;
+          proceso.SetTiempoTranscurrido(tiempoTranscurrido);
           cout << "Tiempo total: " << tiempoTotal << " segundos" << endl;
           // Pausa de un segundo para simular el tiempo
           this_thread::sleep_for(chrono::seconds(1));
@@ -278,9 +333,12 @@ int main() {
           tiempoRestante--;
           tiempoSumado++;
           tiempoTotal++;
+          tiempoTranscurrido++;
+          tiempobloq--;
           if (tiempoSumado == totalTime) {
             listaLoteTerminados.push_back(proceso);
           }
+
         }
       }
 
@@ -312,6 +370,6 @@ int main() {
     bandera = true;  // Reiniciamos la bandera
     contador++;      // Cambiamos de lote
   }
-  this_thread::sleep_for(chrono::seconds(10));
+  system("pause");
   return 0;
 }

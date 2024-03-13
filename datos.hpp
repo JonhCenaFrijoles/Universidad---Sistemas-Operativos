@@ -10,15 +10,26 @@ class Datos {
  private:
   int ID;
   int loteID;
+  int T_Estimado;
   int T_Duracion;
   int T_Transcurrido = 0;
   string resultado;
   string operadores;
   string operador;
+  int tiempoBloq;
 
  public:
+
+  bool mostrarProceso() const;
+
+  void SetTiempoEstimado(int);
+  int GetTiempoEstimado() const;
+
   void SetTiempo(int);
   int GetTiempo() const;
+
+  void setTiempoBloq(int);
+  int getTiempoBloq()const;
 
   void SetTiempoTranscurrido(int);
   int GetTiempoTranscurrido() const;
