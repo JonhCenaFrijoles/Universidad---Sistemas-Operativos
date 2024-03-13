@@ -17,6 +17,9 @@ int Datos::GetID() const { return ID; }
 void Datos::setLoteID(int _loteID) { loteID = _loteID; }
 int Datos::getLoteID() const { return loteID; }
 
+void Datos::SetTiempoEstimado(int _TiempoEstimado) { T_Estimado = _TiempoEstimado; }
+int Datos::GetTiempoEstimado() const { return T_Estimado; }
+
 void Datos::SetTiempo(int _Tiempo) { T_Duracion = _Tiempo; }
 int Datos::GetTiempo() const { return T_Duracion; }
 
@@ -39,10 +42,32 @@ std::string Datos::getOperadores() const {
     return operadores;
 }
 
+void Datos::setTiempoBloq(int _tB){tiempoBloq=_tB; }
+int Datos::getTiempoBloq()const{return tiempoBloq;}
+
 // Sobrecarga del operador ==
 bool Datos::operator==(const Datos& otro) const {
   return ID == otro.ID;  // Aquí puedes comparar los miembros relevantes para
                          // determinar la igualdad
+}
+//mostrar procesos de los datos bloqueados
+bool Datos::mostrarProceso() const {
+    int tiempoTotal = 8;
+    int tiempoTranscurrido = 0;
+    while (tiempoTotal != 0) {
+        cout << "Tiempo restante: " << tiempoTotal << " segundos" << endl;
+        cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos" << endl;
+        // Pausa de un segundo para simular el tiempo
+        this_thread::sleep_for(chrono::seconds(1));
+        cout << "\033[2A\033[K";  // Retrocede dos líneas y las limpia
+        tiempoTotal--;
+
+        tiempoTranscurrido++;
+        if (tiempoTotal == 0) {
+            return true;
+        }
+    }
+    return false; // Return false if tiempoTotal != 0
 }
 
 int Datos::toStringProceso(int tiempoTotal) const {
