@@ -1,5 +1,7 @@
 #include "datos.hpp"
+
 #include <conio.h>
+
 #include <chrono>
 #include <iomanip>
 #include <iostream>
@@ -15,9 +17,36 @@ void Datos::SetId(int _id) { ID = _id; }
 int Datos::GetID() const { return ID; }
 
 void Datos::setLoteID(int _loteID) { loteID = _loteID; }
+
+int Datos::getTiempoLlegada() const { return T_Llegada; }
+
+void Datos::setTiempoLlegada(int _tiempoLlegada) { T_Llegada = _tiempoLlegada; }
+
+int Datos::getTiempoFinalizacion() const { return T_Finalizacion; }
+
+void Datos::setTiempoFinalizacion(int _tiempoFinalizacion) {
+  T_Finalizacion = _tiempoFinalizacion;
+}
+
+int Datos::getTiempoRetorno() const { return T_Retorno; }
+
+void Datos::setTiempoRetorno(int _tiempoFinalizacion, int _tiempoLlegada) { T_Retorno = _tiempoFinalizacion - _tiempoLlegada; }
+
+int Datos::getTiempoRespuesta() const { return T_Respuesta; }
+
+void Datos::setTiempoRespuesta(int _tiempoDuracion, int _tiempoLlegada) {
+  T_Respuesta = _tiempoDuracion - _tiempoLlegada;
+}
+
+int Datos::getTiempoEspera() const { return T_Espera; }
+
+void Datos::setTiempoEspera(int _tiempoRespuesta, int _tiempoDuracion) { T_Espera = _tiempoRespuesta - _tiempoDuracion; }
+
 int Datos::getLoteID() const { return loteID; }
 
-void Datos::SetTiempoEstimado(int _TiempoEstimado) { T_Estimado = _TiempoEstimado; }
+void Datos::SetTiempoEstimado(int _TiempoEstimado) {
+  T_Estimado = _TiempoEstimado;
+}
 int Datos::GetTiempoEstimado() const { return T_Estimado; }
 
 void Datos::SetTiempo(int _Tiempo) { T_Duracion = _Tiempo; }
@@ -38,14 +67,34 @@ void Datos::setOperadores(string _operadorUno, string _operadorDos,
                           string _operador) {
   operadores = _operadorUno + _operador + _operadorDos;
 }
-std::string Datos::getOperadores() const {
-    return operadores;
-}
+std::string Datos::getOperadores() const { return operadores; }
+
+void Datos::setTiempoBloq(int _tB) { tiempoBloq = _tB; }
+int Datos::getTiempoBloq() const { return tiempoBloq; }
 
 // Sobrecarga del operador ==
 bool Datos::operator==(const Datos& otro) const {
   return ID == otro.ID;  // Aquí puedes comparar los miembros relevantes para
                          // determinar la igualdad
+}
+// mostrar procesos de los datos bloqueados
+bool Datos::mostrarProceso() const {
+  int tiempoTotal = 8;
+  int tiempoTranscurrido = 0;
+  while (tiempoTotal != 0) {
+    cout << "Tiempo restante: " << tiempoTotal << " segundos" << endl;
+    cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos" << endl;
+    // Pausa de un segundo para simular el tiempo
+    this_thread::sleep_for(chrono::seconds(1));
+    cout << "\033[2A\033[K";  // Retrocede dos líneas y las limpia
+    tiempoTotal--;
+
+    tiempoTranscurrido++;
+    if (tiempoTotal == 0) {
+      return true;
+    }
+  }
+  return false;  // Return false if tiempoTotal != 0
 }
 
 int Datos::toStringProceso(int tiempoTotal) const {
@@ -55,7 +104,6 @@ int Datos::toStringProceso(int tiempoTotal) const {
   cout << "ID: " << ID << endl;
   cout << "Operadores: " << operadores << endl;
   while (tiempoRestante > 0) {
-
     // Imprimir informaci�n de toStringProceso
     cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
     cout << "Tiempo de proceso: " << tiempoSumado << " segundos" << endl;
@@ -74,4 +122,10 @@ int Datos::toStringProceso(int tiempoTotal) const {
 void Datos::toStringTerminados(int lote) const {
   cout << "ID  OPE  RES  NL " << endl;
   cout << ID << "    " << resultado << "    " << lote << endl << endl;
+}
+
+void Datos::calcularTiempos() {
+  setTiempoRetorno(getTiempoFinalizacion(),getTiempoLlegada());
+  setTiempoRespuesta(GetTiempo(),getTiempoLlegada());
+  setTiempoEspera(getTiempoRespuesta(), GetTiempo());
 }
