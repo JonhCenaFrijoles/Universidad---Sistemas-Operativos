@@ -1,0 +1,163 @@
+# depslib dependency file v1.0
+1708744662 source:c:\users\ivan0\desktop\sistemas\datos.cpp
+	"datos.hpp"
+	<conio.h>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1708744670 c:\users\ivan0\desktop\sistemas\datos.hpp
+	<sstream>
+	"string"
+
+1708744662 source:c:\users\ivan0\desktop\sistemas\lote.cpp
+	"lote.hpp"
+	<algorithm>
+	<iostream>
+
+1708744670 c:\users\ivan0\desktop\sistemas\lote.hpp
+	"datos.hpp"
+	"vector"
+
+1708744662 source:c:\users\ivan0\desktop\sistemas\main.cpp
+	<conio.h>
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<list>
+	<mutex>
+	<random>
+	<string>
+	<thread>
+	<vector>
+	<limits>
+	"datos.hpp"
+	"lote.hpp"
+
+1708744662 source:c:\users\chavc\desktop\algoritmos\sistemas\datos.cpp
+	"datos.hpp"
+	<conio.h>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1708744670 c:\users\chavc\desktop\algoritmos\sistemas\datos.hpp
+	<sstream>
+	"string"
+
+1708744662 source:c:\users\chavc\desktop\algoritmos\sistemas\lote.cpp
+	"lote.hpp"
+	<algorithm>
+	<iostream>
+
+1708744670 c:\users\chavc\desktop\algoritmos\sistemas\lote.hpp
+	"datos.hpp"
+	"vector"
+
+1708980084 source:c:\users\chavc\desktop\algoritmos\sistemas\main.cpp
+	<conio.h>
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<list>
+	<mutex>
+	<random>
+	<string>
+	<thread>
+	<vector>
+	<limits>
+	"datos.hpp"
+	"lote.hpp"
+
+1709841715 source:c:\users\chavc\desktop\sistemas\datos.cpp
+	"datos.hpp"
+	<conio.h>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1709841824 c:\users\chavc\desktop\sistemas\datos.hpp
+	<sstream>
+	"string"
+
+1709841579 source:c:\users\chavc\desktop\sistemas\lote.cpp
+	"lote.hpp"
+	<iomanip>
+	<algorithm>
+	<iostream>
+
+1709841579 c:\users\chavc\desktop\sistemas\lote.hpp
+	"datos.hpp"
+	"vector"
+
+1709840391 source:c:\users\chavc\desktop\sistemas\main.cpp
+	<conio.h>
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<list>
+	<mutex>
+	<random>
+	<string>
+	<thread>
+	<vector>
+	<limits>
+	"datos.hpp"
+	"lote.hpp"
+
+1710951224 source:c:\users\ivan0\desktop\sss\datos.cpp
+	"datos.hpp"
+	<conio.h>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1710951242 c:\users\ivan0\desktop\sss\datos.hpp
+	<sstream>
+	"string"
+
+1710954830 source:c:\users\ivan0\desktop\sss\main.cpp
+	<conio.h>
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<limits>
+	<list>
+	<mutex>
+	<random>
+	<string>
+	<thread>
+	<vector>
+	"datos.hpp"
+	"lote.hpp"
+
+1710951242 c:\users\ivan0\desktop\sss\lote.hpp
+	"datos.hpp"
+	"vector"
+
+1710951230 source:c:\users\ivan0\desktop\sss\lote.cpp
+	"lote.hpp"
+	<iomanip>
+	<algorithm>
+	<iostream>
+
