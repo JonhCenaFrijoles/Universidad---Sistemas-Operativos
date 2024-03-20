@@ -48,6 +48,8 @@ int Lote::obtenerTamanio() const { return listaLote.size(); }
 // Método para verificar si la lista está vacía
 bool Lote::estaVacia() const { return listaLote.empty() && listaBloqueados.empty(); }
 
+bool Lote::estaVaciaLote() const { return listaLote.empty(); }
+
 // Método para asignar un Lote
 void Lote::setLoteID(int _lote) { loteID = _lote; }
 
@@ -80,11 +82,11 @@ Datos Lote::obtenerElemento(int posicion) const {
   // Verificar si la posición es válida
   if (posicion >= 0 && posicion < listaLote.size()) {
     return listaLote[posicion];
-  } else {
+  } /*else {
     // Manejar el caso de una posición inválida, puedes lanzar una excepción o
     // devolver un valor por defecto
     throw std::out_of_range("Posición inválida");
-  }
+  }*/
 }
 
 

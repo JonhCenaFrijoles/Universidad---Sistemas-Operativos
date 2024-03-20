@@ -32,6 +32,8 @@ class Lote {
   // Método para verificar si la lista está vacía
   bool estaVacia() const;
 
+  bool estaVaciaLote() const;
+
   void vaciarLote();
 
   // Método para asignar un lote

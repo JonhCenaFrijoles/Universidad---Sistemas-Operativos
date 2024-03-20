@@ -15,7 +15,9 @@ class Datos {
   int T_Finalizacion;
   int T_Retorno;
   int T_Respuesta;
+  bool T_RespuestaVerificador;
   int T_Espera;
+  int T_Servicio;
 
   int T_Estimado;
   int T_Duracion;  // Tiempo Servicio
@@ -24,6 +26,7 @@ class Datos {
   string operadores;
   string operador;
   int tiempoBloq;
+  bool verificarBloqueo;
 
  public:
   int GetID() const;
@@ -44,10 +47,16 @@ class Datos {
   void setTiempoRetorno(int, int);
 
   int getTiempoRespuesta() const;
-  void setTiempoRespuesta(int, int);
+  void setTiempoRespuesta(int);
+
+  bool getTiempoRespuestaVerificar() const;
+  void setTiempoRespuestaVerificar(bool);
 
   int getTiempoEspera() const;
   void setTiempoEspera(int, int);
+
+  int getTiempoServicio() const;
+  void setTiempoServicio(int);
 
   // ----------
 
@@ -61,6 +70,9 @@ class Datos {
 
   void setTiempoBloq(int);
   int getTiempoBloq() const;
+
+  void setVerificarBloqueado(bool);
+  bool getVerificarBloqueado() const;
 
   void SetTiempoTranscurrido(int);
   int GetTiempoTranscurrido() const;
@@ -79,8 +91,6 @@ class Datos {
   int toStringProceso(int) const;
 
   void toStringTerminados(int lote) const;
-
-  void calcularTiempos();
 };
 
 #endif  // __DATOS_H__
