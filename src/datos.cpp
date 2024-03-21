@@ -145,3 +145,7 @@ void Datos::toStringTerminados(int lote) const {
   cout << "ID  OPE  RES  NL " << endl;
   cout << ID << "    " << resultado << "    " << lote << endl << endl;
 }
+
+void Datos::crearProceso(int id){
+  
+}

@@ -91,6 +91,8 @@ class Datos {
   int toStringProceso(int) const;
 
   void toStringTerminados(int lote) const;
+
+  void crearProceso(int id);
 };
 
 #endif  // __DATOS_H__
