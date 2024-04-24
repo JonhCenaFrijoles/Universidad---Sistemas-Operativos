@@ -13,7 +13,7 @@ class Lote {
  public:
   // Constructor
   Lote();
-
+ int obtenerNumeroProcesos() const;
   void mostarProceso();
   // Método para agregar un objeto a la lista
   void agregarElemento(const Datos& elemento);
@@ -31,6 +31,8 @@ class Lote {
 
   // Método para verificar si la lista está vacía
   bool estaVacia() const;
+
+  bool estaVaciaLote() const;
 
   void vaciarLote();
 

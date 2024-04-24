@@ -27,20 +27,48 @@ int Datos::getTiempoFinalizacion() const { return T_Finalizacion; }
 void Datos::setTiempoFinalizacion(int _tiempoFinalizacion) {
   T_Finalizacion = _tiempoFinalizacion;
 }
+void Datos::setQuantum(int _quantum){
+    quantum = _quantum;
+    }
+int Datos::getQuantum()const{
+    return quantum;
+    }
 
 int Datos::getTiempoRetorno() const { return T_Retorno; }
 
-void Datos::setTiempoRetorno(int _tiempoFinalizacion, int _tiempoLlegada) { T_Retorno = _tiempoFinalizacion - _tiempoLlegada; }
+void Datos::setTiempoRetorno(int _tiempoFinalizacion, int _tiempoLlegada) {
+  T_Retorno = _tiempoFinalizacion - _tiempoLlegada;
+}
 
 int Datos::getTiempoRespuesta() const { return T_Respuesta; }
 
-void Datos::setTiempoRespuesta(int _Tr) {
-  T_Respuesta = _Tr;
+void Datos::setTiempoRespuesta(int _Tr) { T_Respuesta = _Tr; }
+
+bool Datos::getTiempoRespuestaVerificar() const {
+  return T_RespuestaVerificador;
 }
 
-int Datos::getTiempoEspera() const { return T_Espera; }
+void Datos::setTiempoRespuestaVerificar(bool consulta) {
+  T_RespuestaVerificador = consulta;
+}
 
-void Datos::setTiempoEspera(int _tiempoRespuesta, int _tiempoDuracion) { T_Espera = _tiempoRespuesta - _tiempoDuracion; }
+bool Datos::getTiempoLlegadaVerificar() const { return verificarLlegada; }
+
+void Datos::setTiempoLlegadaVerificar(bool tiempoLlegada) {
+  verificarLlegada = tiempoLlegada;
+}
+
+int Datos::getTiempoEspera() const { return T_Espera - 1; }
+
+void Datos::setTiempoEspera(int _tiempoRetorno, int _tiempoDuracion) {
+  T_Espera = _tiempoRetorno - _tiempoDuracion;
+}
+
+int Datos::getTiempoServicio() const { return T_Servicio; }
+
+void Datos::setTiempoServicio(int _tiempoServicio) {
+  T_Servicio = _tiempoServicio;
+}
 
 int Datos::getLoteID() const { return loteID; }
 
@@ -71,6 +99,12 @@ std::string Datos::getOperadores() const { return operadores; }
 
 void Datos::setTiempoBloq(int _tB) { tiempoBloq = _tB; }
 int Datos::getTiempoBloq() const { return tiempoBloq; }
+
+void Datos::setVerificarBloqueado(bool bloqueado) {
+  verificarBloqueo = bloqueado;
+}
+
+bool Datos::getVerificarBloqueado() const { return verificarBloqueo; }
 
 // Sobrecarga del operador ==
 bool Datos::operator==(const Datos& otro) const {
@@ -124,8 +158,4 @@ void Datos::toStringTerminados(int lote) const {
   cout << ID << "    " << resultado << "    " << lote << endl << endl;
 }
 
-void Datos::calcularTiempos() {
-  setTiempoRetorno(getTiempoFinalizacion(),getTiempoLlegada());
-  //setTiempoRespuesta(GetTiempo(),getTiempoLlegada());
-  setTiempoEspera(getTiempoRespuesta(), GetTiempo());
-}
+void Datos::crearProceso(int id) {}

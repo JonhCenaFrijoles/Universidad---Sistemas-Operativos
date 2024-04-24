@@ -15,8 +15,11 @@ class Datos {
   int T_Finalizacion;
   int T_Retorno;
   int T_Respuesta;
+  bool T_RespuestaVerificador;
   int T_Espera;
+  int T_Servicio;
 
+  int quantum;
   int T_Estimado;
   int T_Duracion;  // Tiempo Servicio
   int T_Transcurrido = 0;
@@ -24,6 +27,8 @@ class Datos {
   string operadores;
   string operador;
   int tiempoBloq;
+  bool verificarBloqueo;
+  bool verificarLlegada;
 
  public:
   int GetID() const;
@@ -46,8 +51,17 @@ class Datos {
   int getTiempoRespuesta() const;
   void setTiempoRespuesta(int);
 
+  bool getTiempoRespuestaVerificar() const;
+  void setTiempoRespuestaVerificar(bool);
+
+  bool getTiempoLlegadaVerificar() const;
+  void setTiempoLlegadaVerificar(bool);
+
   int getTiempoEspera() const;
   void setTiempoEspera(int, int);
+
+  int getTiempoServicio() const;
+  void setTiempoServicio(int);
 
   // ----------
 
@@ -62,8 +76,14 @@ class Datos {
   void setTiempoBloq(int);
   int getTiempoBloq() const;
 
+  void setVerificarBloqueado(bool);
+  bool getVerificarBloqueado() const;
+
   void SetTiempoTranscurrido(int);
   int GetTiempoTranscurrido() const;
+
+  void setQuantum(int);
+  int getQuantum()const;
 
   void setOperadores(string, string, string);
   string getOperadores() const;
@@ -80,7 +100,7 @@ class Datos {
 
   void toStringTerminados(int lote) const;
 
-  void calcularTiempos();
+  void crearProceso(int id);
 };
 
 #endif  // __DATOS_H__

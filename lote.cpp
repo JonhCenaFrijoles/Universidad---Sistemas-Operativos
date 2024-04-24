@@ -48,6 +48,9 @@ int Lote::obtenerTamanio() const { return listaLote.size(); }
 // Método para verificar si la lista está vacía
 bool Lote::estaVacia() const { return listaLote.empty() && listaBloqueados.empty(); }
 
+bool Lote::estaVaciaLote() const { return listaLote.empty(); }
+
+
 // Método para asignar un Lote
 void Lote::setLoteID(int _lote) { loteID = _lote; }
 
