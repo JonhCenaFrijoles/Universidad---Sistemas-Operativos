@@ -64,9 +64,9 @@ void verificarDivision(int numeroDos) {
 
 // Definición de la función para aleatorizar los números con parámetros.
 int generarEnterosAleatorios(int minimo, int maximo) {
-  static random_device rd;
-  static mt19937 gen(rd());
-  static uniform_int_distribution<> distribucion(minimo, maximo);
+  random_device rd;
+  mt19937 gen(rd());
+  uniform_int_distribution<> distribucion(minimo, maximo);
   return distribucion(gen);
 }
 
@@ -99,7 +99,8 @@ void imprimirTiempos(Datos proceso) {
        << " ||Resultado: " << proceso.getResultado() << "\n";
 }
 
-void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProcesos, float quantum) {
+void crearProceso(Lote& lote, int& numeroLote, int& i,
+                  vector<Datos>& listaProcesos, float quantum) {
   Datos proceso;
 
   int tiempoEstimado, opcionOperacion, numeroUno,
@@ -115,36 +116,19 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
   proceso.SetTiempo(tiempoEstimado);
   proceso.SetTiempoEstimado(tiempoEstimado);
 
-  generarEnterosAleatorios(1, 5);
+  // generarEnterosAleatorios(1, 5);
   opcionOperacion = generarEnterosAleatorios(1, 5);
 
-  switch (opcionOperacion) {
-    case 1:
-      proceso.setOperador("'Multiplicación'");
-      break;
-    case 2:
-      proceso.setOperador("'División'");
-      break;
-    case 3:
-      proceso.setOperador("'Suma'");
-      break;
-    case 4:
-      proceso.setOperador("'Resta'");
-      break;
-    case 5:
-      proceso.setOperador("'Residuo'");
-      break;
-  }
-
-  numeroUno = generarEnterosAleatorios(1, 100);
-  numeroDos = generarEnterosAleatorios(1, 100);
+  numeroUno = generarEnterosAleatorios();
+  numeroDos = generarEnterosAleatorios();
 
   switch (opcionOperacion) {  // Asignar operación
     case 1: {
       proceso.setResultado(to_string(numeroUno) + "x" + to_string(numeroDos) +
                            "=" + to_string(numeroUno * numeroDos));
 
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " x ");
+      proceso.setOperadores(to_string(numeroUno) + " x " +
+                            to_string(numeroDos));
       break;
     }
     case 2: {
@@ -152,19 +136,22 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
       verificarDivision(numeroDos);
       proceso.setResultado(to_string(numeroUno) + "/" + to_string(numeroDos) +
                            "=" + to_string(numeroUno / numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " / ");
+      proceso.setOperadores(to_string(numeroUno) + " / " +
+                            to_string(numeroDos));
       break;
     }
     case 3: {
       proceso.setResultado(to_string(numeroUno) + "+" + to_string(numeroDos) +
                            "=" + to_string(numeroUno + numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " + ");
+      proceso.setOperadores(to_string(numeroUno) + " + " +
+                            to_string(numeroDos));
       break;
     }
     case 4: {
       proceso.setResultado(to_string(numeroUno) + "-" + to_string(numeroDos) +
                            "=" + to_string(numeroUno - numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " - ");
+      proceso.setOperadores(to_string(numeroUno) + " - " +
+                            to_string(numeroDos));
       break;
     }
     case 5: {
@@ -172,7 +159,8 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
       verificarDivision(numeroDos);
       proceso.setResultado(to_string(numeroUno) + "%" + to_string(numeroDos) +
                            "=" + to_string(numeroUno % numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " % ");
+      proceso.setOperadores(to_string(numeroUno) + " % " +
+                            to_string(numeroDos));
       break;
     }
   }
@@ -188,7 +176,9 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
   i++;
 }
 
-void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProcesos, int& tiempoTotal) {
+void crearProceso(Lote& lote, int& numeroLote, int& i,
+                  vector<Datos>& listaProcesos, int& tiempoTotal,
+                  float quantum) {
   Datos proceso;
 
   int tiempoEstimado, opcionOperacion, numeroUno,
@@ -204,26 +194,8 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
   proceso.SetTiempo(tiempoEstimado);
   proceso.SetTiempoEstimado(tiempoEstimado);
 
-  generarEnterosAleatorios(1, 5);
+  // generarEnterosAleatorios(1, 5);
   opcionOperacion = generarEnterosAleatorios(1, 5);
-
-  switch (opcionOperacion) {
-    case 1:
-      proceso.setOperador("'Multiplicación'");
-      break;
-    case 2:
-      proceso.setOperador("'División'");
-      break;
-    case 3:
-      proceso.setOperador("'Suma'");
-      break;
-    case 4:
-      proceso.setOperador("'Resta'");
-      break;
-    case 5:
-      proceso.setOperador("'Residuo'");
-      break;
-  }
 
   numeroUno = generarEnterosAleatorios(1, 100);
   numeroDos = generarEnterosAleatorios(1, 100);
@@ -233,7 +205,8 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
       proceso.setResultado(to_string(numeroUno) + "x" + to_string(numeroDos) +
                            "=" + to_string(numeroUno * numeroDos));
 
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " x ");
+      proceso.setOperadores(to_string(numeroUno) + " x " +
+                            to_string(numeroDos));
       break;
     }
     case 2: {
@@ -241,19 +214,22 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
       verificarDivision(numeroDos);
       proceso.setResultado(to_string(numeroUno) + "/" + to_string(numeroDos) +
                            "=" + to_string(numeroUno / numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " / ");
+      proceso.setOperadores(to_string(numeroUno) + " / " +
+                            to_string(numeroDos));
       break;
     }
     case 3: {
       proceso.setResultado(to_string(numeroUno) + "+" + to_string(numeroDos) +
                            "=" + to_string(numeroUno + numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " + ");
+      proceso.setOperadores(to_string(numeroUno) + " + " +
+                            to_string(numeroDos));
       break;
     }
     case 4: {
       proceso.setResultado(to_string(numeroUno) + "-" + to_string(numeroDos) +
                            "=" + to_string(numeroUno - numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " - ");
+      proceso.setOperadores(to_string(numeroUno) + " - " +
+                            to_string(numeroDos));
       break;
     }
     case 5: {
@@ -261,7 +237,8 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
       verificarDivision(numeroDos);
       proceso.setResultado(to_string(numeroUno) + "%" + to_string(numeroDos) +
                            "=" + to_string(numeroUno % numeroDos));
-      proceso.setOperadores(to_string(numeroUno), to_string(numeroDos), " % ");
+      proceso.setOperadores(to_string(numeroUno) + " % " +
+                            to_string(numeroDos));
       break;
     }
   }
@@ -271,19 +248,12 @@ void crearProceso(Lote& lote, int& numeroLote, int& i, vector<Datos>& listaProce
   proceso.setLoteID(numeroLote);
   proceso.setTiempoLlegada(tiempoTotal);
   proceso.setTiempoLlegadaVerificar(false);
+  proceso.setQuantum(quantum);
   listaProcesos.push_back(proceso);  // Lista de los procesos
   lote.agregarElemento(proceso);     // Agrega el proceso a su lotes
 
   i++;
 }
-void manejarQuantum(Datos& proceso, Lote& lote) {
-    // Mover al siguiente proceso del lote actual
-
-    //lote.moverSiguienteProceso(proceso);
-}
-
-
-
 
 int main() {
   int numeroLote = 1;
@@ -303,8 +273,10 @@ int main() {
 
   // Añadir proceso
   float quantum;
-  cout<<"igresa el quantum que deseas ingresar"<<endl;
-  cin>>quantum;
+
+  cout << "Ingresa el quantum que deseas ingresar" << endl;
+  cin >> quantum;
+
   while (i < numeroProcesoTotal) {
     system("cls");
 
@@ -363,7 +335,8 @@ int main() {
     if (contadorLote < 4 && proceso.getTiempoLlegadaVerificar()) {
       proceso.setTiempoLlegada(0);
     }
-    if (contadorLote > 4 && proceso.getTiempoLlegadaVerificar() && proceso.getLoteID() > 4) {
+    if (contadorLote > 4 && proceso.getTiempoLlegadaVerificar() &&
+        proceso.getLoteID() > 4) {
       proceso.setTiempoLlegada(tiempoTotal);
     }
 
@@ -373,7 +346,8 @@ int main() {
 
     // Mostramos el lote
     cout << "Procesos Faltantes: "
-         << listaProcesos.size() - listaLoteTerminados.size() << endl;
+         << listaProcesos.size() - listaLoteTerminados.size()
+         << "\tQuantum: " << quantum << endl;
     lote.mostrarLote(lote);
 
     cout << "\n----------------------------------" << endl;
@@ -391,8 +365,7 @@ int main() {
     int tiempobloq = 8;
     int tiempoRestante = proceso.GetTiempo();
     int tiempoSumado = 0;
-    int tiempoQuantum =0;
-
+    int tiempoQuantum = 0;
 
     bool pausado = false;
 
@@ -406,19 +379,21 @@ int main() {
 
     cout << "         Ejecucion        " << endl;
     cout << "ID: " << proceso.GetID() << endl;
+    // cout << "-----" << proceso.getOperadores() << "-----" << endl;
     cout << "Operadores: " << proceso.getOperadores() << endl;
 
     // Bucle para la interrumpción y la terminación de procesos
     while (tiempoRestante > 0) {
-       if (tiempoQuantum == proceso.getQuantum()) {
-            lote.eliminarElemento(proceso);
-             proceso.SetTiempo(totalTime - tiempoSumado);
-             proceso.SetTiempoTranscurrido(tiempoTranscurrido);
-             lote.agregarElemento(proceso);
-             proceso=lote.obtenerElemento(posicion);
-             tiempoQuantum=0;
-       break;
-        }
+      if (tiempoQuantum == proceso.getQuantum()) {
+        lote.eliminarElemento(proceso);
+        proceso.SetTiempo(totalTime - tiempoSumado);
+        proceso.SetTiempoTranscurrido(tiempoTranscurrido);
+        lote.agregarElemento(proceso);
+        proceso = lote.obtenerElemento(posicion);
+        tiempoQuantum = 0;
+        break;
+      }
+
       if (kbhit()) {
         char tecla = getch();  // Obtener la tecla presionada
 
@@ -439,7 +414,8 @@ int main() {
           objetoAux.SetId(proceso.GetID());
           lote.eliminarElemento(proceso);
           objetoAux.SetTiempo(totalTime - tiempoSumado);
-          objetoAux.SetTiempoTranscurrido(tiempoTranscurrido);  // Actualizar su tiempo
+          objetoAux.SetTiempoTranscurrido(
+              tiempoTranscurrido);  // Actualizar su tiempo
           objetoAux.setTiempoBloq(0);
           objetoAux.setVerificarBloqueado(true);
 
@@ -497,24 +473,33 @@ int main() {
         }
         if (tecla == 'n') {
           cout << "Proceso No.  " << i + 1 << endl << endl;
-
-          contador++;
-          Lote& loteSiguiente = *contador;
-          crearProceso(loteSiguiente, numeroLote, i, listaProcesos, tiempoTotal);
-
-          contador--;
-          contadorProceso++;
+          if (lote.obtenerTamanio() == 3) {
+            cout << "\n\n++++++++++++++++";
+            contador++;
+            numeroLote++;
+            Lote& loteSiguiente = *contador;
+            crearProceso(loteSiguiente, numeroLote, i, listaProcesos,
+                         tiempoTotal, quantum);
+            contador--;
+            contadorProceso++;
+            cout << "\n\n--------------";
+          } else {
+            crearProceso(lote, numeroLote, i, listaProcesos, tiempoTotal,
+                         quantum);
+            contadorProceso++;
+          }
         }
       }
 
       // Si no esta pausado, sigue el proceso como si nada
       if (!pausado) {
+        tiempoTranscurrido = proceso.GetTiempoTranscurrido();
         // recorrer el proceso de los bloqueados
         recorrerListaBloq(listaBloq, lote);
         // Imprimir información del proceso
         cout << "Tiempo restante: " << tiempoRestante << " segundos" << endl;
-        cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos"<< endl;
-        proceso.SetTiempoTranscurrido(tiempoTranscurrido);
+        cout << "Tiempo ejecutado: " << tiempoTranscurrido << " segundos"
+             << endl;
         cout << "Tiempo total: " << tiempoTotal << " segundos" << endl;
         // Pausa de un segundo para simular el tiempo
         this_thread::sleep_for(chrono::seconds(1));
@@ -522,12 +507,13 @@ int main() {
         tiempoSumado++;
         tiempoTotal++;
         tiempoTranscurrido++;
+        proceso.SetTiempoTranscurrido(tiempoTranscurrido);
         tiempobloq--;
         tiempoEspera++;
         tiempoQuantum++;
-       // Dentro del bucle principal donde se ejecutan los procesos
         // Dentro del bucle principal donde se ejecutan los procesos
-        cout <<"\033[3A\033[K";
+        // Dentro del bucle principal donde se ejecutan los procesos
+        cout << "\033[3A\033[K";
 
         if (tiempoSumado == totalTime) {
           // Agregamos tiempo de finalización, retorno y servicio **

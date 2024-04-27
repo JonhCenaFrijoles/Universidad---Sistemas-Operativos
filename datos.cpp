@@ -27,9 +27,11 @@ int Datos::getTiempoFinalizacion() const { return T_Finalizacion; }
 void Datos::setTiempoFinalizacion(int _tiempoFinalizacion) {
   T_Finalizacion = _tiempoFinalizacion;
 }
+
 void Datos::setQuantum(int _quantum){
     quantum = _quantum;
     }
+
 int Datos::getQuantum()const{
     return quantum;
     }
@@ -91,9 +93,9 @@ void Datos::setOperador(string _operador) { operador = _operador; }
 
 string Datos::getOperador() const { return operador; }
 
-void Datos::setOperadores(string _operadorUno, string _operadorDos,
-                          string _operador) {
-  operadores = _operadorUno + _operador + _operadorDos;
+void Datos::setOperadores(const string& operadores) {
+  this->operadores = operadores;
+  cout << "Operadores guardados: " << this->operadores << endl;
 }
 std::string Datos::getOperadores() const { return operadores; }
 
@@ -158,4 +160,3 @@ void Datos::toStringTerminados(int lote) const {
   cout << ID << "    " << resultado << "    " << lote << endl << endl;
 }
 
-void Datos::crearProceso(int id) {}

@@ -85,7 +85,7 @@ class Datos {
   void setQuantum(int);
   int getQuantum()const;
 
-  void setOperadores(string, string, string);
+  void setOperadores(const string&);
   string getOperadores() const;
 
   void setOperador(string);

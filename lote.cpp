@@ -60,13 +60,11 @@ int Lote::getLoteID() const { return loteID; }
 // Método para mostrar un Lote
 void Lote::mostrarLote(const Lote& lote) const {
   for (const Datos& proceso : lote.listaLote) {
-    cout << "\nID: " << proceso.GetID() << "\n";
-    cout << "TR: " << proceso.GetTiempo() << endl;
-    cout << "TT: " << proceso.GetTiempoTranscurrido() << endl;
+    cout << "\nID: " << proceso.GetID() <<
+    "\tTR: " << proceso.GetTiempo() <<
+    "\tTT: " << proceso.GetTiempoTranscurrido() << endl;
   }
 }
-
-
 
 //funcioo para mostrar lotes bloqueados
 void Lote::mostrarBloqueados(Lote& lote)const{
