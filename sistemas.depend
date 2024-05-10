@@ -79,7 +79,7 @@
 	"datos.hpp"
 	"lote.hpp"
 
-1710633766 source:c:\users\chavc\desktop\sistemas\datos.cpp
+1715012809 source:c:\users\chavc\desktop\sistemas\datos.cpp
 	"datos.hpp"
 	<conio.h>
 	<chrono>
@@ -90,21 +90,21 @@
 	<string>
 	<thread>
 
-1710633748 c:\users\chavc\desktop\sistemas\datos.hpp
+1715012787 c:\users\chavc\desktop\sistemas\datos.hpp
 	<sstream>
 	"string"
 
-1710635210 source:c:\users\chavc\desktop\sistemas\lote.cpp
+1715012905 source:c:\users\chavc\desktop\sistemas\lote.cpp
 	"lote.hpp"
 	<iomanip>
 	<algorithm>
 	<iostream>
 
-1710627723 c:\users\chavc\desktop\sistemas\lote.hpp
+1715017364 c:\users\chavc\desktop\sistemas\lote.hpp
 	"datos.hpp"
 	"vector"
 
-1710635851 source:c:\users\chavc\desktop\sistemas\main.cpp
+1715026884 source:c:\users\chavc\desktop\sistemas\main.cpp
 	<conio.h>
 	<algorithm>
 	<chrono>
@@ -119,4 +119,67 @@
 	<vector>
 	"datos.hpp"
 	"lote.hpp"
+	"marco.hpp"
+
+1715026814 source:c:\users\chavc\desktop\sistemas\marco.cpp
+	"marco.hpp"
+	<iomanip>
+	<algorithm>
+	<iostream>
+
+1715025721 c:\users\chavc\desktop\sistemas\marco.hpp
+	"datos.hpp"
+	"vector"
+
+1715101592 source:c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\datos.cpp
+	"datos.hpp"
+	<conio.h>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<mutex>
+	<sstream>
+	<string>
+	<thread>
+
+1715101592 c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\datos.hpp
+	<sstream>
+	"string"
+
+1715012905 source:c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\lote.cpp
+	"lote.hpp"
+	<iomanip>
+	<algorithm>
+	<iostream>
+
+1715017364 c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\lote.hpp
+	"datos.hpp"
+	"vector"
+
+1715361151 source:c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\main.cpp
+	<conio.h>
+	<algorithm>
+	<chrono>
+	<iomanip>
+	<iostream>
+	<limits>
+	<list>
+	<mutex>
+	<random>
+	<string>
+	<thread>
+	<vector>
+	"datos.hpp"
+	"lote.hpp"
+	"marco.hpp"
+
+1715025721 c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\marco.hpp
+	"datos.hpp"
+	"vector"
+
+1715101886 source:c:\users\ivan0\desktop\kkklklkkjkjlhjkhgjk\marco.cpp
+	"marco.hpp"
+	<iomanip>
+	<algorithm>
+	<iostream>
 

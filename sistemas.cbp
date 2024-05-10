@@ -37,6 +37,8 @@
 		<Unit filename="lote.cpp" />
 		<Unit filename="lote.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="marco.cpp" />
+		<Unit filename="marco.hpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
